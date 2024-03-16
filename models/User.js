@@ -29,11 +29,13 @@ const UserSchema = new mongoose.Schema({
     theme: String,
     grid: [[String]],
     words: [String], // Add words array
-    foundWords: [String] // Add foundWords array
+    wordsFound: [String],
+    solved: {
+        type: Boolean,
+        default: false,
+    }
   }]
 });
-
-
 
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password') || this.isNew) {

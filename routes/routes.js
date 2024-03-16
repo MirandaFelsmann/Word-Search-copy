@@ -17,9 +17,20 @@ router.get('/changePassword', auth.changePassword);
 router.post('/updatePassword', auth.updatePassword);
 
 
-router.get('/', auth.isAuthenticated, post.createCrossword);
-router.post('/save-crossword', post.saveCrosswordToProfile);
+router.get('/', auth.isAuthenticated, post.home);
+router.get('/newCrossword', post.newCrossword);
+
+
+
+//router.post('/save-crossword', post.saveCrosswordToProfile);
 router.get('/crossword/:id', post.loadCrossword);
+//router.post('/start-crossword', post.startAndLoadCrossword)
+router.post('/submit-word', post.submitWord);
+
+//router.post('/mark-word-found', post.markWordFound);
+
+//router.post('/submit-word', post.submitWord);
+//router.post('/add-found-word', post.addFoundWord);
 //router.get('/products/:page', post.loadPosts);
 //router.post('/api/products', post.getProducts);
 //

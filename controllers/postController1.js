@@ -103,20 +103,31 @@ export const createCrossword = async (req, res) => {
 
         fillEmptySlotsWithRandomLetters(grid); // Fill empty slots with random letters
         const gridData = grid.map((row, rowIndex) => {
-            return row.map((cell, colIndex) => {
-                const isPartOfWord = placedWords.some(wordData => {
-                    if (wordData.direction === 'horizontal') {
-                        return rowIndex === wordData.startRow && colIndex >= wordData.startCol && colIndex < wordData.startCol + wordData.word.length;
-                    } else {
-                        return colIndex === wordData.startCol && rowIndex >= wordData.startRow && rowIndex < wordData.startRow + wordData.word.length;
-                    }
-                });
-                return {
-                    letter: cell,
-                    isPartOfWord: isPartOfWord
-                };
-            });
+    return row.map((cell, colIndex) => {
+        const isPartOfWord = placedWords.some(wordData => {
+            if (wordData.direction === 'horizontal') {
+                return rowIndex === wordData.startRow && colIndex >= wordData.startCol && colIndex < wordData.startCol + wordData.word.length;
+            } else {
+                return colIndex === wordData.startCol && rowIndex >= wordData.startRow && rowIndex < wordData.startRow + wordData.word.length;
+            }
         });
+
+        const wordClass = isPartOfWord ? `word-${placedWords.find(wordData => {
+            if (wordData.direction === 'horizontal') {
+                return rowIndex === wordData.startRow && colIndex >= wordData.startCol && colIndex < wordData.startCol + wordData.word.length;
+            } else {
+                return colIndex === wordData.startCol && rowIndex >= wordData.startRow && rowIndex < wordData.startRow + wordData.word.length;
+            }
+        }).word}` : '';
+
+        return {
+            letter: cell,
+            isPartOfWord: isPartOfWord,
+            wordClass: wordClass
+        };
+    });
+});
+
 
         res.render('posts/index', { user, theme, data: randomWords, grid: gridData });
     } catch (error) {
@@ -130,7 +141,12 @@ export const saveCrosswordToProfile = async (req, res) => {
         const userId = req.user.id;
         const theme = req.body.theme;
         const grid = req.body.grid;
-        const words = req.body.words;
+        const words = req.body.words || []; // Set default value to an empty array if 'words' is missing
+
+        // Check if 'words' is not an array or it doesn't have exactly 10 elements
+        if (!Array.isArray(words) || words.length !== 10) {
+            return res.status(400).send('Words array must have exactly 10 elements.');
+        }
 
         const newCrossword = new Post({
             theme: theme,
@@ -158,6 +174,9 @@ export const saveCrosswordToProfile = async (req, res) => {
     }
 };
 
+
+
+
 export const loadCrossword = async (req, res) => {
     try {
         const crosswordId = req.params.id;
@@ -179,4 +198,25 @@ export const loadCrossword = async (req, res) => {
     }
 };
 
+export const addFoundWord = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { word } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        if (!user.foundWords.includes(word)) {
+            user.foundWords.push(word);
+            await user.save();
+        }
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error adding found word:", error);
+        res.status(500).json({ success: false, error: 'Error adding found word' });
+    }
+};
 

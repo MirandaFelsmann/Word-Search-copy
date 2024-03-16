@@ -7,7 +7,7 @@ export const login = (req, res) => {
 
 export const verifyLogin = 
   passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
+                                   failureRedirect: '/',
                                    failureFlash: false });
 
 export const register = (req, res) => {
