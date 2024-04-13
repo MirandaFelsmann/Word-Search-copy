@@ -1,11 +1,62 @@
-body {
-    background-color: #f9e3e3; /* Light pink background color */
-    color: #333; /* Dark text color for better readability */
-    font-family: 'Arial', sans-serif; /* Choose your preferred font family */
+/* Reset default browser styles */
+html, body, div, h1, h2, h3, p, ul, li, form, input, button, table, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
-h1, h3 {
+body {
+    font-family: "seitu-variable", sans-serif; /* Specify the font family */
+    font-weight: " 400; /* Specify the font weight */
+    font-style: normal; /* Specify the font style */
+    background-color: #f9e3e3; /* Light pink background color */
+    color: #333; /* Dark text color for better readability */
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: flex-start;
+    margin-top: 20px;
+    padding: 0 20px; /* Add padding to the sides */
+}
+
+.crossword-section {
+    padding-left: 20px; /* Adjust the value as needed */
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.box {
+    border: 2px solid #e44d4d; /* Dark pink border around each box */
+    border-radius: 5px; /* Rounded corners for the boxes */
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px; /* Adjust the value as needed */
+}
+
+h3 {
     color: #e44d4d; /* Dark pink heading color */
+    font-family: "poleno", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+    color: #e44d4d; /* Dark pink heading color */
+    font-family: "poleno", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
+}
+
+p{ 
+    font-family: "seitu-variable", sans-serif;
+    font-weight: 400;    
+    font-style: normal; /* Specify the font style */
 }
 
 table {
@@ -30,7 +81,7 @@ select, button {
     cursor: pointer;
 }
 
-
 button:hover, select:hover {
     background-color: #d14242; /* Slightly darker pink on hover */
 }
+

@@ -5,77 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crossword</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://use.typekit.net/cyc4viu.css">
+    <style>
+        /* Add this CSS */
+        .box {
+            border: 2px solid #e44d4d; /* Dark pink border around each box */
+            border-radius: 5px; /* Rounded corners for the boxes */
+            padding: 10px;
+            margin-bottom: 20px;
+            margin-left: 20px; /* Adjust the value as needed */
+        }
+    </style>
 </head>
 <body>
-    <h1>20x20 Word Search</h1>
-    <p>This word search has been changed to 20x20 to avoid loading errors.</p>
-    
-    <form id="themeForm" action="/newCrossword" method="GET">
-        <label for="theme">Enter a theme word:</label>
-        <input type="text" id="theme" name="theme" required>
-        <button type="submit">Go</button>
-    </form>
-    
-    <% if (solved === true)  { %>
-        <h2>You solved this crossword!</h2>
-    <% } %>
-    
-    <div id="wordList">
-        <h3>Words to Find:</h3>
-        <ul>
-            <% data.forEach((item) => { %>
-                <% if (typeof item === 'string') { %>
-                    <!-- If item is a string, directly add it to the list -->
-                    <li><%= item %></li>
-                <% } else { %>
-                    <!-- If item is an object, assume it has 'word' property -->
-                    <li><%= item.word %></li>
-                <% } %>
-            <% }); %>
-        </ul>
-    </div>
-    <div id="wordsFoundList">
-        <h3>Words Found</h3>
-        <ul>
-            <% wordsFound.forEach((item) => { %>
-                <li><%= item %></li>
-            <% }); %>
-        </ul>
-    </div>
-
-
-    
-    <form action="/submit-word" method="POST">
-        <input type="text" id="selectedWord" name="selectedWord">
-        <input type="text" id="crosswordId" name="crosswordId" value="<%= crosswordId %>" style="display: none">
-        <button id="submitWord" type="submit">Submit Word</button>
-    </form>
-    <table id="crosswordTable">
-        <% grid.forEach((row, rowIndex) => { %>
-            <tr>
-                <% row.forEach((letter, colIndex) => { %>
-                    <td onclick="selectLetter('<%= rowIndex %>', '<%= colIndex %>', '<%= letter.charAt(0) %>')" id="cell-<%= rowIndex %>-<%= colIndex %>" class="<%= letter.slice(1) %>"><%= letter.charAt(0) %></td>
+    <div class="container">
+        <div class="crossword-section">
+            <h1>20x20 Word Search</h1>
+            <p>This word search has been changed to 20x20 to avoid loading errors.</p>
+            <form id="themeForm" action="/newCrossword" method="GET">
+                <label for="theme">Enter a theme word:</label>
+                <input type="text" id="theme" name="theme" required>
+                <button type="submit">Go</button>
+            </form>
+            <% if (solved === true)  { %>
+                <h2>You solved this crossword!</h2>
+            <% } %>
+            <table id="crosswordTable">
+                <% grid.forEach((row, rowIndex) => { %>
+                    <tr>
+                        <% row.forEach((letter, colIndex) => { %>
+                            <td onclick="selectLetter('<%= rowIndex %>', '<%= colIndex %>', '<%= letter.charAt(0) %>')" id="cell-<%= rowIndex %>-<%= colIndex %>" class="<%= letter.slice(1) %>"><%= letter.charAt(0) %></td>
+                        <% }); %>
+                    </tr>
                 <% }); %>
-            </tr>
-        <% }); %>
-    </table>
-
-
-
-
-    
-    <div id="savedCrosswords">
-        <h3>Saved Word Searches:</h3>
-        <ul>
-            <% user.crosswords.forEach((crossword, index) => { %>
-                <li>
-                    <a href="/crossword/<%= crossword.crosswordId %>">Word Search <%= index + 1 %></a>
-                </li>
-            <% }); %>
-        </ul>
+            </table>
+        </div>
+        <div class="info-section">
+            <div class="box"> <!-- Added box class -->
+                <div id="wordList">
+                    <h3>Words to Find:</h3>
+                    <ul>
+                        <% data.forEach((item) => { %>
+                            <% if (typeof item === 'string') { %>
+                                <!-- If item is a string, directly add it to the list -->
+                                <li><%= item %></li>
+                            <% } else { %>
+                                <!-- If item is an object, assume it has 'word' property -->
+                                <li><%= item.word %></li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <div class="box"> <!-- Added box class -->
+                <div id="wordsFoundList">
+                    <h3>Words Found</h3>
+                     <ul>
+                    <% wordsFound.forEach((item) => { %>
+                        <li><%= item %></li>
+                    <% }); %>
+                </ul>
+                </div>
+            </div>
+            <div class="box"> <!-- Added box class -->
+                <div id="savedCrosswords">
+                    <h3>Saved Word Searches:</h3>
+                    <ul>
+                    <% user.crosswords.forEach((crossword, index) => { %>
+                        <li>
+                            <a href="/crossword/<%= crossword.crosswordId %>">Word Search <%= index + 1 %></a>
+                        </li>
+                    <% }); %>
+                </ul>
+                </div>
+            </div>
+            <form action="/submit-word" method="POST">
+                <input type="text" id="selectedWord" name="selectedWord">
+                <input type="text" id="crosswordId" name="crosswordId" value="<%= crosswordId %>" style="display: none">
+                <button id="submitWord" type="submit">Submit Word</button>
+            </form>
+        </div>
     </div>
-
-
 <script src="/script.js"></script>
 </body>
 </html>
+
