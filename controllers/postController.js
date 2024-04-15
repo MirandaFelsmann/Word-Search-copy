@@ -15,6 +15,46 @@ export const home = async (req, res) => {
     }
 }
 
+//export const newCrossword = async (req, res) => {
+//    console.log("newCrossword");
+//    try {
+//        const userId = req.user.id;
+//        let user = await User.findById(userId);
+//        const theme = req.query.theme || 'baseball';
+//        const response = await fetch(`https://api.datamuse.com/words?rel_trg=${theme}`);
+//        const data = await response.json();
+//        const randomIndexes = generateRandomIndexes(data.length, 10);
+//        const randomWords = randomIndexes.map(index => data[index]);
+//        const grid = initializeGrid();
+//        randomWords.forEach(wordObj => placeWordInGrid(grid, wordObj.word));
+//        const wordArray = randomWords.map(wordObj => wordObj.word);
+//        
+//        const newCrossword = new Post({
+//            theme: theme,
+//            words: wordArray,
+//            grid: grid
+//        });
+//        await newCrossword.save();
+//        const crossword = await Post.findById(newCrossword._id);
+//        user = await User.findByIdAndUpdate(userId, {
+//            $push: {
+//                crosswords: {
+//                crosswordId: newCrossword._id,
+//                theme: theme,
+//                grid: grid,
+//                words: crossword.words,
+//                solved: false,
+//                }
+//            }
+//        }, { new: true });     
+//        
+//        res.redirect(`/crossword/${newCrossword._id}`);
+//    } catch (error) {
+//        console.error("Error:", error);
+//        res.status(500).send('Error');
+//    }
+//}
+
 export const newCrossword = async (req, res) => {
     console.log("newCrossword");
     try {
@@ -28,21 +68,23 @@ export const newCrossword = async (req, res) => {
         const grid = initializeGrid();
         randomWords.forEach(wordObj => placeWordInGrid(grid, wordObj.word));
         const wordArray = randomWords.map(wordObj => wordObj.word);
-        
+
+        // After all words have been placed, fill any '?' and '!' with a random letter
+        fillGridWithRandomLetters(grid);
+
         const newCrossword = new Post({
             theme: theme,
             words: wordArray,
             grid: grid
         });
         await newCrossword.save();
-        const crossword = await Post.findById(newCrossword._id);
         user = await User.findByIdAndUpdate(userId, {
             $push: {
                 crosswords: {
                 crosswordId: newCrossword._id,
                 theme: theme,
                 grid: grid,
-                words: crossword.words,
+                words: wordArray,
                 solved: false,
                 }
             }
@@ -54,6 +96,24 @@ export const newCrossword = async (req, res) => {
         res.status(500).send('Error');
     }
 }
+
+// Helper function to fill grid with random letters in place of '?' and '!'
+const fillGridWithRandomLetters = (grid) => {
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            if (grid[i][j] === '?' || grid[i][j] === '-') {
+                grid[i][j] = getRandomLetter();
+            }
+        }
+    }
+};
+
+// Helper function to generate a random letter
+const getRandomLetter = () => {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return alphabet[Math.floor(Math.random() * alphabet.length)];
+};
+
 
 const generateRandomIndexes = (max, count) => {
     const indexes = new Set();

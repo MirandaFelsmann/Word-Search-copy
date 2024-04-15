@@ -74,7 +74,7 @@ function isAdjacent(cell1, cell2) {
 function clearSelection() {
     selectedCells.forEach(cell => {
         const cellId = `cell-${cell.rowIndex}-${cell.colIndex}`;
-        document.getElementById(cellId).style.backgroundColor = 'white';
+        document.getElementById(cellId).style.backgroundColor = 'transparent';
     });
     selectedCells = [];
     document.getElementById('selectedWord').value = '';

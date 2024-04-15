@@ -49,10 +49,10 @@
                         <% data.forEach((item) => { %>
                             <% if (typeof item === 'string') { %>
                                 <!-- If item is a string, directly add it to the list -->
-                                <li><%= item %></li>
+                                <li style="list-style-type: none"><%= item %></li>
                             <% } else { %>
                                 <!-- If item is an object, assume it has 'word' property -->
-                                <li><%= item.word %></li>
+                                <li style="list-style-type: none"><%= item.word %></li>
                             <% } %>
                         <% }); %>
                     </ul>
@@ -63,7 +63,7 @@
                     <h3>Words Found</h3>
                      <ul>
                     <% wordsFound.forEach((item) => { %>
-                        <li><%= item %></li>
+                        <li style="list-style-type: none"><%= item %></li>
                     <% }); %>
                 </ul>
                 </div>
@@ -73,7 +73,7 @@
                     <h3>Saved Word Searches</h3>
                     <ul>
                     <% user.crosswords.forEach((crossword, index) => { %>
-                        <li>
+                        <li style="list-style-type: none">
                             <a href="/crossword/<%= crossword.crosswordId %>">Word Search <%= index + 1 %></a>
                         </li>
                     <% }); %>
