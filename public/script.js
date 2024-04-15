@@ -22,6 +22,13 @@ submitWordButton.addEventListener('click', function() {
         setTimeout(function() {
             document.getElementById('selectedWord').value = '';
         }, 1000);
+
+        // Apply strikethrough effect to the found word in the "Words to Find" box
+        listItems.forEach(function(item) {
+            if (item.textContent.trim() === selectedWord) {
+                item.classList.add('strikethrough');
+            }
+        });
     }
 });
 
