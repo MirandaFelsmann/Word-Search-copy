@@ -44,7 +44,7 @@
         <div class="info-section">
             <div class="box"> <!-- Added box class -->
                 <div id="wordList">
-                    <h3>Words to Find:</h3>
+                    <h3>Words to Find</h3>
                     <ul>
                         <% data.forEach((item) => { %>
                             <% if (typeof item === 'string') { %>
@@ -70,7 +70,7 @@
             </div>
             <div class="box"> <!-- Added box class -->
                 <div id="savedCrosswords">
-                    <h3>Saved Word Searches:</h3>
+                    <h3>Saved Word Searches</h3>
                     <ul>
                     <% user.crosswords.forEach((crossword, index) => { %>
                         <li>
@@ -80,7 +80,7 @@
                 </ul>
                 </div>
             </div>
-            <form action="/submit-word" method="POST">
+            <form action="/submit-word" method="POST" class="submit-form">
                 <input type="text" id="selectedWord" name="selectedWord">
                 <input type="text" id="crosswordId" name="crosswordId" value="<%= crosswordId %>" style="display: none">
                 <button id="submitWord" type="submit">Submit Word</button>

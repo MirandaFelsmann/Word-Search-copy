@@ -3,20 +3,43 @@ wordList = document.getElementById("wordList");
 wordsFound = document.getElementById("wordsFoundList");
 
 submitWordButton.addEventListener('click', function() {
-    selectedWord = document.getElementById("selectedWord").value;
-        // Get all list items under the wordList
+    selectedWord = document.getElementById("selectedWord").value.trim(); // Trim whitespace from input
     listItems = wordList.querySelectorAll("ul li");
-        // Iterate through each list item
+
+    // Check if the selected word exists in the word list
+    let found = false;
     listItems.forEach(function(item) {
-        // Check if the text content matches the selectedWord
-        if (item.value === selectedWord.trim()) {
-            console.log("good job");
-            // Exit the loop if a match is found
+        if (item.textContent.trim() === selectedWord) {
+            found = true;
             return;
         }
     });
+
+    // If the word is found, show flash message and clear input
+    if (found) {
+        flashMessage("Word found: " + selectedWord);
+        // Clear input field after a short delay
+        setTimeout(function() {
+            document.getElementById('selectedWord').value = '';
+        }, 1000);
+    }
 });
-    
+
+function flashMessage(message) {
+    // Create a message element
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('flash-message');
+    messageElement.textContent = message;
+
+    // Append the message element to the body
+    document.body.appendChild(messageElement);
+
+    // Remove the message element after a short delay
+    setTimeout(function() {
+        messageElement.remove();
+    }, 2000);
+}
+
 let selectedCells = [];
 let currentWord = '';
 function selectLetter(rowIndex, colIndex, letter) {
@@ -51,18 +74,14 @@ function clearSelection() {
 }
 
 async function updateWordsFound() {
-    console.log("hey")
     foundListItems = wordsFound.querySelectorAll("ul li");
     foundListItems.forEach(function(item) {
-        console.log(item.textContent);
         itemWord = item.textContent.toUpperCase();
-        foundWord = document.querySelectorAll("." + itemWord); // Select elements with class name equal to itemWord
-        foundWord.forEach(function(element) { // Loop through foundWord elements
-            element.style.backgroundColor = "pink"; // Apply red background color
+        foundWord = document.querySelectorAll("." + itemWord);
+        foundWord.forEach(function(element) {
+            element.style.backgroundColor = "pink";
         });
     });
 }
 
-    
-    
 updateWordsFound();
