@@ -58,7 +58,7 @@ async function updateWordsFound() {
         itemWord = item.textContent.toUpperCase();
         foundWord = document.querySelectorAll("." + itemWord); // Select elements with class name equal to itemWord
         foundWord.forEach(function(element) { // Loop through foundWord elements
-            element.style.backgroundColor = "red"; // Apply red background color
+            element.style.backgroundColor = "pink"; // Apply red background color
         });
     });
 }

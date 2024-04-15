@@ -7,55 +7,61 @@ html, body, div, h1, h2, h3, p, ul, li, form, input, button, table, td {
 
 body {
     font-family: "seitu-variable", sans-serif; /* Specify the font family */
-    font-weight: " 400; /* Specify the font weight */
+    font-weight: 400; /* Specify the font weight */
     font-style: normal; /* Specify the font style */
     background-color: #f9e3e3; /* Light pink background color */
     color: #333; /* Dark text color for better readability */
+    line-height: 1.6; /* Improved line spacing */
 }
 
 .container {
     display: flex;
     justify-content: center; /* Center items horizontally */
     align-items: flex-start;
-    margin-top: 20px;
+    margin-top: 40px; /* Increased top margin for better spacing */
     padding: 0 20px; /* Add padding to the sides */
 }
 
 .crossword-section {
-    padding-left: 20px; /* Adjust the value as needed */
+    padding-left: 20px; /* Adjusted padding for better alignment */
 }
 
 .info-section {
     display: flex;
     flex-direction: column;
+    margin-top: 120px;
 }
 
 .box {
     border: 2px solid #e44d4d; /* Dark pink border around each box */
-    border-radius: 5px; /* Rounded corners for the boxes */
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-left: 20px; /* Adjust the value as needed */
+    border-radius: 10px; /* Slightly rounded corners for the boxes */
+    padding: 10px; /* Increased padding for better spacing */
+    margin-bottom: 20px; /* Increased margin bottom for better separation */
+    margin-left: 40px; /* Increased margin left for better spacing */
 }
 
-h3 {
+.info-section .box {
+    text-align: center; /* Center text horizontally within the box */
+    padding-left: 40px; /* Adjusted padding left to center text */
+    margin-top: 20px; /* Move the boxes down to align with the top of the crossword grid */
+    margin-bottom: 5px; /* Reduce the gap between boxes */
+}
+
+
+h1, h2, h3 {
+    font-family: "poleno", sans-serif; /* Specify the font family for headings */
+    font-weight: 400; /* Specify the font weight */
+    font-style: normal; /* Specify the font style */
     color: #e44d4d; /* Dark pink heading color */
-    font-family: "poleno", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 }
 
 h1 {
-    color: #e44d4d; /* Dark pink heading color */
-    font-family: "poleno", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 60px;
+    font-size: 48px; /* Reduced font size for h1 */
 }
 
-p{ 
-    font-family: "seitu-variable", sans-serif;
-    font-weight: 400;    
+p {
+    font-family: "seitu-variable", sans-serif; /* Specify the font family for paragraphs */
+    font-weight: 400; /* Specify the font weight */
     font-style: normal; /* Specify the font style */
 }
 
@@ -73,15 +79,15 @@ td {
 
 select, button {
     margin: 10px 0;
-    padding: 8px;
+    padding: 12px; /* Increased padding for better touch target */
     font-size: 16px;
     background-color: #e44d4d; /* Dark pink background color for dropdown and button */
     color: #fff; /* White text color for better visibility */
     border: none;
+    border-radius: 5px; /* Rounded corners for buttons */
     cursor: pointer;
 }
 
 button:hover, select:hover {
     background-color: #d14242; /* Slightly darker pink on hover */
 }
-
